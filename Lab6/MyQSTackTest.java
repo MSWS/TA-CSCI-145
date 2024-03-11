@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.Queue;
+import java.util.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,6 +18,32 @@ public class MyQSTackTest {
 
         for (Method method : methods) {
             assertFalse(Modifier.isStatic(method.getModifiers()));
+        }
+    }
+
+    @Test
+    void verifyQueueAndNoStack() {
+        try {
+            Field[] fields = QStack.class.getDeclaredFields();
+
+            boolean hasQueueField = false;
+
+            for (Field field : fields) {
+                if (Queue.class.isAssignableFrom(field.getType())) {
+                    // Check if it's a Queue<Integer>
+                    if (field.getGenericType() instanceof ParameterizedType) {
+                        ParameterizedType pType = (ParameterizedType) field.getGenericType();
+                        hasQueueField = Integer.class.equals(pType.getActualTypeArguments()[0]);
+                    }
+                } else if (Stack.class.isAssignableFrom(field.getType())) {
+                    fail("QStack should not have a Stack<Integer> field");
+                }
+            }
+
+            assertTrue(hasQueueField, "QStack should have at least one Queue<Integer> field");
+
+        } catch (Exception e) {
+            fail("Error during reflection: " + e.getMessage());
         }
     }
 
