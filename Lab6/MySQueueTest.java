@@ -61,13 +61,13 @@ public class MySQueueTest {
     }
 
     @Test
-    public void testPop() {
+    public void testRemove() {
         queue.add(1);
         assertEquals(1, queue.remove());
     }
 
     @Test
-    public void testPop_Multiple() {
+    public void testRemove_Multiple() {
         for (int i = 1; i <= 5; i++)
             queue.add(i);
         for (int i = 1; i <= 5; i++)
@@ -75,7 +75,7 @@ public class MySQueueTest {
     }
 
     @Test
-    public void testPop_Invalid() {
+    public void testRemove_Invalid() {
         for (int i = 1; i <= 5; i++)
             queue.add(i);
         for (int i = 0; i < 5; i++)
