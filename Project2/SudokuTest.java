@@ -6,6 +6,8 @@ import org.junit.rules.TestWatcher;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -47,6 +49,19 @@ public class SudokuTest {
                 System.out.print(puzzle[i][j] + " ");
             }
             System.out.println();
+        }
+    }
+
+    @Test
+    public void testCheck_Signature() {
+        // Method is public static boolean check(char[][] puzzle)
+        Class<?> c = Sudoku.class;
+        try {
+            Method check = c.getDeclaredMethod("check", char[][].class);
+            assertTrue("Method check is not public", Modifier.isPublic(check.getModifiers()));
+            assertTrue("Method check is not static", Modifier.isStatic(check.getModifiers()));
+        } catch (NoSuchMethodException e) {
+            fail("Method check does not exist");
         }
     }
 
@@ -130,6 +145,19 @@ public class SudokuTest {
                 puzzle[i / 3][i % 3] = c;
                 assertFalse(Sudoku.check(puzzle));
             }
+        }
+    }
+
+    @Test
+    public void testSolver_Signature() {
+        // Method is public static boolean solve(char[][] puzzle)
+        Class<?> c = Sudoku.class;
+        try {
+            Method solve = c.getDeclaredMethod("solve", char[][].class);
+            assertTrue("Method solve is not public", Modifier.isPublic(solve.getModifiers()));
+            assertTrue("Method solve is not static", Modifier.isStatic(solve.getModifiers()));
+        } catch (NoSuchMethodException e) {
+            fail("Method solve does not exist");
         }
     }
 
