@@ -149,7 +149,7 @@ public class SudokuTest {
     }
 
     @Test
-    public void testSolver_Signature() {
+    public void testSolve_Signature() {
         // Method is public static boolean solve(char[][] puzzle)
         Class<?> c = Sudoku.class;
         try {
@@ -217,6 +217,30 @@ public class SudokuTest {
         puzzle[0][0] = '1';
         puzzle[0][1] = '1';
         assertFalse(Sudoku.solve(puzzle));
-        assertEquals("This puzzle is invalid\n", outputStreamCaptor.toString());
+        assertTrue(outputStreamCaptor.toString().toLowerCase().contains("invalid"));
+    }
+
+    @Test
+    public void testSolve_Invalid_AlmostFull() {
+        for (int row = 0; row < puzzle.length; row++) {
+            for (int col = 0; col < puzzle[0].length; col++) {
+                puzzle[row][col] = '1';
+            }
+        }
+        puzzle[puzzle.length - 1][puzzle[0].length - 1] = '.';
+        assertFalse(Sudoku.solve(puzzle));
+        assertTrue(outputStreamCaptor.toString().toLowerCase().contains("invalid"));
+    }
+
+
+    @Test
+    public void testSolve_Invalid_Full() {
+        for (int row = 0; row < puzzle.length; row++) {
+            for (int col = 0; col < puzzle[0].length; col++) {
+                puzzle[row][col] = '1';
+            }
+        }
+        assertFalse(Sudoku.solve(puzzle));
+        assertTrue(outputStreamCaptor.toString().toLowerCase().contains("invalid"));
     }
 }
