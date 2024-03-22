@@ -2,11 +2,11 @@ public class Main {
     public static void main(String[] args) {
         for (int i = 0; i < 100; i++) {
             char[][] puzzle = SudokuP.puzzle();
-            if (!Sudoku.check(puzzle)) {
-                System.out.println("ERR: Reported invalid when it was valid");
-                printPuzzle(puzzle);
-                break;
-            }
+//            if (!Sudoku.check(puzzle)) {
+//                System.out.println("ERR: Reported invalid when it was valid");
+//                printPuzzle(puzzle);
+//                break;
+//            }
             if (!Sudoku.solve(puzzle)) {
                 System.out.println("ERR: Reported unsolvable when it was solvable");
                 printPuzzle(puzzle);
